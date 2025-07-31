@@ -1,0 +1,35 @@
+// Import Express
+const express = require("express");
+const app = express();
+const PORT = 3000;
+
+// Middleware to parse JSON
+app.use(express.json());
+
+// Hardcoded student data
+let students = [
+  { id: 1, name: "Shifa", age: 21, course: "Computer" },
+  { id: 2, name: "Anika", age: 22, course: "IT" },
+  { id: 3, name: "Shagupta", age: 23, course: "Civil" }
+];
+
+// GET Route - Returns list of students
+app.get("/students", (req, res) => {
+  res.json(students);
+});
+
+// POST Route - Add new student
+app.post("/add-student", (req, res) => {
+  const { name, age, course } = req.body;
+  console.log("New Student Data Received:", req.body);
+
+  // Optionally, add to the list
+  students.push({ id: students.length + 1, name, age, course });
+
+  res.json({ message: "Student added successfully!", data: req.body });
+});
+
+// Start Server
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});
